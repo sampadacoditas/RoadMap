@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Tree from "react-d3-tree";
 import classes from "./RoadMapComponent.module.scss";
 import { data } from "./data";
 import { useCenteredTree } from "./helpers";
+import SubNode from "../Node/SubNode";
 // @ts-ignore
-import Modal from "react-modal";
+import { v4 as uuidv4 } from "uuid";
+
 const RoadMapComponent = () => {
   const [translate, containerRef] = useCenteredTree();
   const [treeData, setTreeData] = useState(data);
@@ -12,13 +14,43 @@ const RoadMapComponent = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentNodeData, setCurrentNodeData] = useState<any>(null);
 
+  const [nodeId, setNodeElement] = useState();
   const nodeSize = { x: 100, y: 100 };
-  const nodeSvgShape = {
-    shape: "circle",
-    shapeProps: {
-      r: 10,
-      fill: "green",
-    },
+  const foreignObjectProps = {
+    width: nodeSize.x * 2,
+    height: nodeSize.y * 2,
+    x: -30,
+  };
+  const renderForeignObjectNode = ({
+    nodeDatum,
+    toggleNode,
+    foreignObjectProps,
+    classes,
+  }: any) => {
+    const onClickEdit = (nodeDatum: any, value: any) => {
+      const updatedData = JSON.parse(JSON.stringify(treeData));
+      const clickedNode = findNodeById(updatedData, nodeDatum?.id);
+      if (clickedNode) {
+        clickedNode.name = value;
+        setTreeData(updatedData);
+      }
+    };
+    return (
+      <>
+        <foreignObject {...foreignObjectProps}>
+          <SubNode
+            openModal={openModal}
+            closeModal={closeModal}
+            nodeDatum={nodeDatum}
+            onClickEdit={(value: any) => onClickEdit(nodeDatum, value)}
+            nodeId={nodeId}
+            handleOnChange={(event: any) => handleOnChange(event.target.value)}
+            enterfun={enterfun}
+            modalIsOpen={modalIsOpen}
+          />
+        </foreignObject>
+      </>
+    );
   };
 
   const findAndAddNode = (parentNode: any, targetName: any, newNode: any) => {
@@ -33,35 +65,27 @@ const RoadMapComponent = () => {
   };
 
   const findNodeById: any = (parentNode: any, targetId: any) => {
-    console.log(
-      "Checking IDs:",
-      parentNode.id,
-      targetId,
-      parentNode.id === targetId
-    );
     if (parentNode.id == targetId) {
-      console.log("hel");
       return parentNode;
     } else if (parentNode.children) {
       for (let child of parentNode.children) {
         const foundNode = findNodeById(child, targetId);
-        console.log(foundNode);
         if (foundNode) return foundNode;
       }
     }
     return null;
   };
 
-  const handleNodeDoubleClick = (nodeData: any) => {
+  const handleAddIconClick = (nodeData: any) => {
     const newNode = {
+      id: uuidv4(),
       name: newNodeName,
-      children: [{ name: "hello" }],
     };
-    const updatedData = JSON.parse(JSON.stringify(treeData));
-    console.log(updatedData, nodeData);
 
-    const clickedNode = findNodeById(updatedData, nodeData.data.id);
-    console.log(clickedNode);
+    const updatedData = JSON.parse(JSON.stringify(treeData));
+    console.log(updatedData);
+
+    const clickedNode = findNodeById(updatedData, nodeData?.id);
 
     if (clickedNode) {
       clickedNode.children = clickedNode.children || [];
@@ -71,10 +95,10 @@ const RoadMapComponent = () => {
   };
 
   const openModal = (nodeData: any) => {
+    setNodeElement(nodeData.id);
     setModalIsOpen(true);
     setCurrentNodeData(nodeData);
   };
-
   const closeModal = () => {
     setModalIsOpen(false);
   };
@@ -82,40 +106,31 @@ const RoadMapComponent = () => {
     setNewNodeName(value);
   };
   const enterfun = () => {
-    console.log("New Node Name:", newNodeName);
     closeModal();
-    handleNodeDoubleClick(currentNodeData);
+    handleAddIconClick(currentNodeData);
   };
   return (
-    <>
-      {modalIsOpen && (
-        <div className={classes.textInput}>
-          <label htmlFor="">
-            New Node
-            <input
-              type="text"
-              className={classes.input}
-              onChange={(e) => handleOnChange(e.target.value)}
-            />
-          </label>
-          <button className={classes.enter} onClick={enterfun}>
-            enter
-          </button>
-          <div onClick={closeModal}>X</div>
-        </div>
-      )}
-      <div className={classes.tree} ref={containerRef}>
-        <Tree
-          data={treeData}
-          translate={translate}
-          nodeSize={nodeSize}
-          onNodeClick={(nodeData) => openModal(nodeData)}
-          orientation="vertical"
-          pathFunc="step"
-          collapsible={false}
-        />
-      </div>
-    </>
+    <div className={classes.tree} ref={containerRef} draggable={false}>
+      <Tree
+        data={treeData}
+        draggable={true}
+        translate={translate}
+        nodeSize={nodeSize}
+        orientation="vertical"
+        // orientation="horizontal"
+        pathFunc="step"
+        collapsible={false}
+        renderCustomNodeElement={(rd3tProps) =>
+          renderForeignObjectNode({
+            ...rd3tProps,
+            foreignObjectProps,
+            classes,
+          })
+        }
+        separation={{ siblings: 2, nonSiblings: 1.5 }}
+        shouldCollapseNeighborNodes={true}
+      />
+    </div>
   );
 };
 

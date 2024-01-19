@@ -22,12 +22,11 @@
   outline: none;
   border: none;
   border-radius: 1rem;
+  outline: none;
 }
 
 .button {
   padding: 0.8rem;
-  top: 0;
-  left: 4rem;
 }
 
 .enterbutton {
@@ -44,4 +43,24 @@
   background-color: aliceblue;
   border: none;
   margin-right: 1rem;
+}
+
+.subNodeContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.editAddButton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.edit {
+  border: none;
+  outline: none;
+}
+.editableField {
+  background-color: white;
+  border: gray;
 }

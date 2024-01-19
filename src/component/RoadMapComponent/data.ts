@@ -1,133 +1,32 @@
-// export const data = {
-//   name: "CEO",
-//   children: [
-//     {
-//       name: "Manager",
-//       attributes: {
-//         department: "Production",
-//       },
-//       children: [
-//         {
-//           name: "Foreman",
-//           attributes: {
-//             department: "Fabrication",
-//           },
-//           children: [
-//             {
-//               name: "Workers",
-//             },
-//           ],
-//         },
-//         {
-//           name: "Foreman",
-//           attributes: {
-//             department: "Assembly",
-//           },
-//           children: [
-//             {
-//               name: "Workers",
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//     {
-//       name: "Manager",
-//       attributes: {
-//         department: "Production",
-//       },
-//       children: [
-//         {
-//           name: "Foreman",
-//           attributes: {
-//             department: "Fabrication",
-//           },
-//           children: [
-//             {
-//               name: "Workers",
-//             },
-//           ],
-//         },
-//         {
-//           name: "Foreman",
-//           attributes: {
-//             department: "Assembly",
-//           },
-//           children: [
-//             {
-//               name: "Workers",
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//     {
-//       name: "Manager",
-//       attributes: {
-//         department: "Marketing",
-//       },
-//       children: [
-//         {
-//           name: "Sales Officer",
-//           attributes: {
-//             department: "A",
-//           },
-//           children: [
-//             {
-//               name: "Salespeople",
-//             },
-//           ],
-//         },
-//         {
-//           name: "Sales Officer",
-//           attributes: {
-//             department: "B",
-//           },
-//           children: [
-//             {
-//               name: "Salespeople",
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//   ],
-// };
-
-
 export const data = {
   id: "1",
-  name: "CEO",
+  name: "Internet",
+  attributes: {
+    department: "Production",
+    department1: "Production",
+    department2: "Production",
+    department3: "Production",
+    department4: "Production",
+  },
   children: [
     {
       id: "2",
-      name: "Manager",
+      name: "HTML",
       attributes: {
         department: "Production",
+        department1: "Production",
+        department2: "Production",
+        department3: "Production",
+        department4: "Production",
       },
       children: [
         {
           id: "3",
-          name: "Foreman",
-          attributes: {
-            department: "Fabrication",
-          },
+          name: "CSS",
+
           children: [
             {
               id: "4",
-              name: "Workers",
-            },
-          ],
-        },
-        {
-          id: "5",
-          name: "Foreman",
-          attributes: {
-            department: "Assembly",
-          },
-          children: [
-            {
-              id: "6",
               name: "Workers",
             },
           ],
@@ -137,16 +36,12 @@ export const data = {
     {
       id: "7",
       name: "Manager",
-      attributes: {
-        department: "Production",
-      },
+
       children: [
         {
           id: "8",
-          name: "Foreman",
-          attributes: {
-            department: "Fabrication",
-          },
+          name: "For",
+
           children: [
             {
               id: "9",
@@ -156,10 +51,8 @@ export const data = {
         },
         {
           id: "10",
-          name: "Foreman",
-          attributes: {
-            department: "Assembly",
-          },
+          name: "For",
+
           children: [
             {
               id: "11",
@@ -172,16 +65,12 @@ export const data = {
     {
       id: "12",
       name: "Manager",
-      attributes: {
-        department: "Marketing",
-      },
+
       children: [
         {
           id: "13",
           name: "Sales Officer",
-          attributes: {
-            department: "A",
-          },
+
           children: [
             {
               id: "14",
@@ -192,9 +81,7 @@ export const data = {
         {
           id: "15",
           name: "Sales Officer",
-          attributes: {
-            department: "B",
-          },
+
           children: [
             {
               id: "16",
@@ -206,3 +93,52 @@ export const data = {
     },
   ],
 };
+
+// export const data = {
+//   id: "1",
+//   name: "Internet",
+//   attributes: {
+//     department: "Production",
+//     department1: "Production",
+//     department2: "Production",
+//     department3: "Production",
+//     department4: "Production",
+//   },
+//   children: [
+//     {
+//       id: "2",
+//       name: "HTML",
+//       attributes: {
+//         department: "Production",
+//         department1: "Production",
+//         department2: "Production",
+//         department3: "Production",
+//         department4: "Production",
+//       },
+//       children: [
+//         {
+//           id: "3",
+//           name: "CSS",
+//           direction: "bottom",
+//           children: [
+//             {
+//               id: "4",
+//               name: "Workers",
+//             },
+//           ],
+//         },
+//         {
+//           id: "4",
+//           name: "CSS",
+//           direction: "right",
+//           children: [
+//             {
+//               id: "4",
+//               name: "Workers",
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//   ],
+// };
